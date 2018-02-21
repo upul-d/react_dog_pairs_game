@@ -6,7 +6,7 @@ const CardGrid = (props) => {
     return <Card url={image} key={index} />
   })
 
-  return <div> {cards} </div>
+  return <div id="card-grid"> {cards} </div>
 }
 
 export default CardGrid;
