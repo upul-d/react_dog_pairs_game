@@ -8,7 +8,8 @@ class GameContainer extends Component {
     super();
 
     this.state = {
-      dogsImages: []
+      dogsImages: [],
+      pairs: []
     }
 
     this.handleCardClick = this.handleCardClick.bind(this);
@@ -27,7 +28,10 @@ class GameContainer extends Component {
   }
 
   handleCardClick(index) {
-    console.log(index);
+    const clickedCard = this.state.dogsImages[index];
+    const pairs = this.state.pairs
+    pairs.push(clickedCard);
+    this.setState({pairs: pairs});
   }
 
   render() {
