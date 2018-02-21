@@ -30,13 +30,16 @@ class GameContainer extends Component {
   }
 
   handleCardClick(index) {
-    const clickedCard = this.state.dogsImages[index];
-    const pairs = this.state.pairs
+    const images = this.state.dogsImages;
+    const pairs = this.state.pairs;
+    const clickedCard = images[index];
     pairs.push(clickedCard);
     this.setState({pairs: pairs});
 
     if (pairs[0] === pairs[1]) {
-      console.log("correct");
+      images[0] = "x";
+      images[1] = "x";
+      this.setState({dogsImages: images});
     } else {
       console.log("incorrect");
     }
