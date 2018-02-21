@@ -2,7 +2,7 @@ import React from 'react';
 
 const Card = (props) => {
   return (
-    <div className="card"><img src={props.url} /></div>
+    <div className="card" onClick={ () => {props.handleCardClick(props.position)} }><img src={props.url} /></div>
   )
 }
 

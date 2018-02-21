@@ -10,6 +10,8 @@ class GameContainer extends Component {
     this.state = {
       dogsImages: []
     }
+
+    this.handleCardClick = this.handleCardClick.bind(this);
   }
 
   onRequestComplete(data) {
@@ -24,9 +26,13 @@ class GameContainer extends Component {
       .catch(console.error)
   }
 
+  handleCardClick(index) {
+    console.log(index);
+  }
+
   render() {
     return (
-      <CardGrid images={this.state.dogsImages}/>
+      <CardGrid images={this.state.dogsImages} handleCardClick={this.handleCardClick}/>
     );
   }
 }
