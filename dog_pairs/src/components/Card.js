@@ -16,6 +16,14 @@ class Card extends Component {
     this.props.handleCardClick(this.props.position);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.endOfTurn) {
+      setTimeout(() => {
+        this.setState({ active: false});
+      }, 1000)
+    }
+  }
+
   render() {
 
     if (this.props.url === "x") {
@@ -30,5 +38,6 @@ class Card extends Component {
   }
 
 }
+
 
 export default Card;

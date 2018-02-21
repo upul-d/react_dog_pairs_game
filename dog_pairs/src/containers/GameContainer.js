@@ -9,7 +9,8 @@ class GameContainer extends Component {
 
     this.state = {
       dogsImages: [],
-      pairs: []
+      pairs: [],
+      endOfTurn: false
     }
 
     this.handleCardClick = this.handleCardClick.bind(this);
@@ -49,11 +50,15 @@ class GameContainer extends Component {
     const pairs = this.state.pairs;
     if (pairs.length === 2) {
       pairs.length = 0
-      this.setState({pairs: pairs});
+      this.setState({pairs: pairs, endOfTurn: true});
     }
   }
 
   handleCardClick(index) {
+
+    if (this.state.pairs.length === 0) {
+        this.setState({endOfTurn: false})
+    }
     const pairs = this.state.pairs;
     pairs.push(index);
     this.setState({pairs: pairs});
@@ -64,7 +69,7 @@ class GameContainer extends Component {
 
   render() {
     return (
-      <CardGrid images={this.state.dogsImages} handleCardClick={this.handleCardClick}/>
+      <CardGrid images={this.state.dogsImages} handleCardClick={this.handleCardClick} endOfTurn={this.state.endOfTurn}/>
     );
   }
 }
