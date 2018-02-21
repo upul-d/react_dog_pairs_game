@@ -26,7 +26,7 @@ class GameContainer extends Component {
 
   render() {
     return (
-      <CardGrid />
+      <CardGrid images={this.state.dogsImages}/>
     );
   }
 }
