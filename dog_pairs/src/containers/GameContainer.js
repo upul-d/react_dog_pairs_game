@@ -10,7 +10,8 @@ class GameContainer extends Component {
     this.state = {
       dogsImages: [],
       pairs: [],
-      endOfTurn: false
+      endOfTurn: false,
+      gameWon: false
     }
 
     this.handleCardClick = this.handleCardClick.bind(this);
@@ -31,9 +32,9 @@ class GameContainer extends Component {
   }
 
   handleMatchedPair(images, pairs) {
-    images[pairs[0]] = "x";
-    images[pairs[1]] = "x";
-    this.setState({dogsImages: images});
+      images[pairs[0]] = "x";
+      images[pairs[1]] = "x";
+      this.setState({dogsImages: images});
   }
 
   checkForMatchingPair() {
@@ -41,8 +42,6 @@ class GameContainer extends Component {
     const images = this.state.dogsImages;
     if (images[pairs[0]] === images[pairs[1]]) {
       this.handleMatchedPair(images, pairs)
-    } else {
-      console.log("incorrect");
     }
   }
 
@@ -52,10 +51,16 @@ class GameContainer extends Component {
       pairs.length = 0
       this.setState({pairs: pairs, endOfTurn: true});
     }
+    this.checkForWin()
+  }
+
+  checkForWin() {
+    if (this.state.dogsImages.every(imageUrl => imageUrl === "x")) {
+      this.setState({ gameWon: true })
+    }
   }
 
   handleCardClick(index) {
-
     if (this.state.pairs.length === 0) {
         this.setState({endOfTurn: false})
     }
@@ -68,8 +73,15 @@ class GameContainer extends Component {
   }
 
   render() {
+    let message = "Keep guessing!"
+    if (this.state.gameWon) {
+      message = <h1>You Won!</h1>
+    }
     return (
-      <CardGrid images={this.state.dogsImages} handleCardClick={this.handleCardClick} endOfTurn={this.state.endOfTurn}/>
+      <div>
+        {message}
+        <CardGrid images={this.state.dogsImages} handleCardClick={this.handleCardClick} endOfTurn={this.state.endOfTurn}/>
+      </div>
     );
   }
 }
