@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import CardGrid from '../components/CardGrid';
 
-class App extends Component {
+class GameContainer extends Component {
   render() {
     return (
-      null
+      <CardGrid />
     );
   }
 }
 
-export default App;
+export default GameContainer;
