@@ -19,6 +19,10 @@ body {
   background-color: black;
 }
 
+.hidden {
+  background-color: red;
+}
+
 .card img {
   width: 150%;
 }
