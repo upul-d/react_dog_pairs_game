@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CardGrid from '../components/CardGrid';
+import Request from '../services/Request';
 
 class GameContainer extends Component {
 
@@ -11,21 +12,16 @@ class GameContainer extends Component {
     }
   }
 
+  onRequestComplete(data) {
+    const firstTwentyData = data.message.slice(0, 20);
+    this.setState({dogsImages: firstTwentyData});
+  }
+
   componentDidMount() {
-    const url = 'https://dog.ceo/api/breed/retriever/images';
-    const xhr = new XMLHttpRequest();
-
-    xhr.open('GET', url);
-
-    xhr.addEventListener('load', () => {
-      const jsonString = xhr.responseText;
-      const data = JSON.parse(jsonString);
-      const firstTwentyData = data.message.slice(0, 20);
-
-      this.setState({dogsImages: firstTwentyData});
-    })
-
-    xhr.send();
+    const request = new Request('https://dog.ceo/api/breed/retriever/images');
+    request.get()
+      .then(this.onRequestComplete.bind(this))
+      .catch(console.error)
   }
 
   render() {
