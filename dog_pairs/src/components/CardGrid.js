@@ -1,7 +1,8 @@
 import React from 'react';
+import Card from './Card';
 
 const CardGrid = () => {
-  return <p>Hello</p>
+  return <Card />
 }
 
 export default CardGrid;
