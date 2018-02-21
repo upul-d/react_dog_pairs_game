@@ -32,6 +32,17 @@ class GameContainer extends Component {
     const pairs = this.state.pairs
     pairs.push(clickedCard);
     this.setState({pairs: pairs});
+
+    if (pairs[0] === pairs[1]) {
+      console.log("correct");
+    } else {
+      console.log("incorrect");
+    }
+
+    if (pairs.length === 2) {
+      pairs.length = 0
+      this.setState({pairs: pairs});
+    }
   }
 
   render() {
