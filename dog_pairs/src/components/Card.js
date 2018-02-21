@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Card = () => {
+const Card = (props) => {
   return (
-    <p>I am a Card</p>
+    <img src={props.url} />
   )
 }
 
