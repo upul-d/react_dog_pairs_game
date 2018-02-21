@@ -16,8 +16,10 @@ class GameContainer extends Component {
   }
 
   onRequestComplete(data) {
-    const firstTwentyData = data.message.slice(0, 20);
-    this.setState({dogsImages: firstTwentyData});
+    const firstData = data.message.slice(0, 10);
+    const duplicatedData = [...firstData, ...firstData];
+    const shuffledData = duplicatedData.sort(() => Math.random() - 0.5)
+    this.setState({dogsImages: shuffledData});
   }
 
   componentDidMount() {
