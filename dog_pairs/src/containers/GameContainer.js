@@ -29,25 +29,37 @@ class GameContainer extends Component {
       .catch(console.error)
   }
 
-  handleCardClick(index) {
-    const images = this.state.dogsImages;
+  handleMatchedPair(images, pairs) {
+    images[pairs[0]] = "x";
+    images[pairs[1]] = "x";
+    this.setState({dogsImages: images});
+  }
+
+  checkForMatchingPair() {
     const pairs = this.state.pairs;
-
-    pairs.push(index);
-    this.setState({pairs: pairs});
-
+    const images = this.state.dogsImages;
     if (images[pairs[0]] === images[pairs[1]]) {
-      images[pairs[0]] = "x";
-      images[pairs[1]] = "x";
-      this.setState({dogsImages: images});
+      this.handleMatchedPair(images, pairs)
     } else {
       console.log("incorrect");
     }
+  }
 
+  endTurn() {
+    const pairs = this.state.pairs;
     if (pairs.length === 2) {
       pairs.length = 0
       this.setState({pairs: pairs});
     }
+  }
+
+  handleCardClick(index) {
+    const pairs = this.state.pairs;
+    pairs.push(index);
+    this.setState({pairs: pairs});
+
+    this.checkForMatchingPair();
+    this.endTurn();
   }
 
   render() {
