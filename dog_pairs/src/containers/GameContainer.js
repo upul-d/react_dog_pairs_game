@@ -37,17 +37,20 @@ class GameContainer extends Component {
   }
 
   handleMatchedPair(deck, pairs) {
-      deck[pairs[0]] = "x";
-      deck[pairs[1]] = "x";
-      this.setState({deck: deck});
+      deck[pairs[0]].status.clickable = false;
+      deck[pairs[1]].status.clickable = false;
+      deck[pairs[0]].status.display = "completed";
+      deck[pairs[1]].status.display = "completed";
+      return deck;
   }
 
   checkForMatchingPair() {
     const pairs = this.state.pairs;
-    const deck = this.state.deck;
-    if (deck[pairs[0]] === deck[pairs[1]]) {
-      this.handleMatchedPair(deck, pairs)
+    let deck = this.state.deck;
+    if (deck[pairs[0]].url === deck[pairs[1]].url) {
+      deck = this.handleMatchedPair(deck, pairs)
     }
+    return deck;
   }
 
   endTurn() {
@@ -71,7 +74,7 @@ class GameContainer extends Component {
     pairs.push(index);
 
     if (pairs.length === 3) {
-      const deck = this.state.deck
+      let deck = this.state.deck
       deck[pairs[0]].status.clickable = true;
       deck[pairs[0]].status.display = "hidden";
       deck[pairs[1]].status.clickable = true;
@@ -81,6 +84,9 @@ class GameContainer extends Component {
       clickedCard.status.display = "shown";
       deck[index] = clickedCard;
       pairs = [index];
+
+      deck = this.checkForMatchingPair()
+
       this.setState({deck: deck, pairs: pairs});
     }
 
