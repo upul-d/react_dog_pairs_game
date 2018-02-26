@@ -20,7 +20,6 @@ class GameContainer extends Component {
     this.buildDeck = this.buildDeck.bind(this);
   }
 
-  // this.setState({dogsImages: shuffledData});
 
   componentDidMount() {
     const deck = new Deck('https://dog.ceo/api/breed/retriever/images');
@@ -38,17 +37,17 @@ class GameContainer extends Component {
       this.setState({deck: shuffledCards});
   }
 
-  handleMatchedPair(images, pairs) {
-      images[pairs[0]] = "x";
-      images[pairs[1]] = "x";
-      this.setState({dogsImages: images});
+  handleMatchedPair(deck, pairs) {
+      deck[pairs[0]] = "x";
+      deck[pairs[1]] = "x";
+      this.setState({deck: deck});
   }
 
   checkForMatchingPair() {
     const pairs = this.state.pairs;
-    const images = this.state.dogsImages;
-    if (images[pairs[0]] === images[pairs[1]]) {
-      this.handleMatchedPair(images, pairs)
+    const deck = this.state.deck;
+    if (deck[pairs[0]] === deck[pairs[1]]) {
+      this.handleMatchedPair(deck, pairs)
     }
   }
 
@@ -62,7 +61,7 @@ class GameContainer extends Component {
   }
 
   checkForWin() {
-    if (this.state.dogsImages.every(imageUrl => imageUrl === "x")) {
+    if (this.state.deck.every(imageUrl => imageUrl === "x")) {
       this.setState({ gameWon: true })
     }
   }
@@ -87,7 +86,7 @@ class GameContainer extends Component {
     return (
       <div>
         {message}
-        {/* <CardGrid images={this.state.dogsImages} handleCardClick={this.handleCardClick} endOfTurn={this.state.endOfTurn}/> */}
+        <CardGrid deck={this.state.deck} handleCardClick={this.handleCardClick} endOfTurn={this.state.endOfTurn}/>
       </div>
     );
   }
