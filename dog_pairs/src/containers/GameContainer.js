@@ -69,12 +69,14 @@ class GameContainer extends Component {
 
     const pairs = this.state.pairs;
     pairs.push(index);
-    this.setState({pairs: pairs});
 
     // update the clicked cards status
-    const clickedCard = this.state.deck[index]
+    const deck = this.state.deck
+    const clickedCard = deck[index]
     clickedCard.status.clickable = false;
     clickedCard.status.display = "shown";
+    deck[index] = clickedCard;
+    this.setState({deck: deck})
 
     // this.checkForMatchingPair();
     // this.endTurn();
