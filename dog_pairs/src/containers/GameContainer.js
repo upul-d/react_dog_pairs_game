@@ -26,7 +26,7 @@ class GameContainer extends Component {
   }
 
   buildDeck(data) {
-      const initialData = data.message.slice(0, 10);
+      const initialData = data.message.slice(0, 2);
       const duplicatedData = [...initialData, ...initialData];
       const cardsArray = duplicatedData.map( (imageUrl) => {
         return new Card(imageUrl, "hidden", true)
@@ -41,6 +41,7 @@ class GameContainer extends Component {
       deck[pairs[1]].status.clickable = false;
       deck[pairs[0]].status.display = "completed";
       deck[pairs[1]].status.display = "completed";
+      this.checkForWin(deck);
       return deck;
   }
 
@@ -53,19 +54,27 @@ class GameContainer extends Component {
     return deck;
   }
 
-  checkForWin() {
-    if (this.state.deck.every(imageUrl => imageUrl === "x")) {
+  checkForWin(deck) {
+    let counter = 0;
+    deck.forEach((card) => {
+      if (card.status.display === "completed") {
+        counter++;
+      }
+    })
+
+    if (counter === deck.length - 2) {
       this.setState({ gameWon: true })
     }
   }
 
   handleCardClick(index) {
+    console.log('handle card click running again');
 
     let pairs = this.state.pairs;
     pairs.push(index);
+    let deck = this.state.deck;
 
     if (pairs.length === 3) {
-      let deck = this.state.deck
       deck[pairs[0]].status.clickable = true;
       deck[pairs[0]].status.display = "hidden";
       deck[pairs[1]].status.clickable = true;
@@ -82,7 +91,6 @@ class GameContainer extends Component {
     }
 
     else {
-      const deck = this.state.deck
       const clickedCard = deck[index]
       clickedCard.status.clickable = false;
       clickedCard.status.display = "shown";
@@ -100,7 +108,7 @@ class GameContainer extends Component {
     return (
       <div>
         {message}
-        <CardGrid deck={this.state.deck} handleCardClick={this.handleCardClick} endOfTurn={this.state.endOfTurn}/>
+        <CardGrid deck={this.state.deck} handleCardClick={this.handleCardClick} />
       </div>
     );
   }
