@@ -53,15 +53,6 @@ class GameContainer extends Component {
     return deck;
   }
 
-  endTurn() {
-    const pairs = this.state.pairs;
-    if (pairs.length === 2) {
-      pairs.length = 0
-      this.setState({pairs: pairs, endOfTurn: true});
-    }
-    this.checkForWin()
-  }
-
   checkForWin() {
     if (this.state.deck.every(imageUrl => imageUrl === "x")) {
       this.setState({ gameWon: true })
@@ -99,9 +90,6 @@ class GameContainer extends Component {
       this.setState({deck: deck});
     }
 
-
-    // this.checkForMatchingPair();
-    // this.endTurn();
   }
 
   render() {
