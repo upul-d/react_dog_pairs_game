@@ -67,16 +67,32 @@ class GameContainer extends Component {
 
   handleCardClick(index) {
 
-    const pairs = this.state.pairs;
+    let pairs = this.state.pairs;
     pairs.push(index);
 
-    // update the clicked cards status
-    const deck = this.state.deck
-    const clickedCard = deck[index]
-    clickedCard.status.clickable = false;
-    clickedCard.status.display = "shown";
-    deck[index] = clickedCard;
-    this.setState({deck: deck})
+    if (pairs.length === 3) {
+      const deck = this.state.deck
+      deck[pairs[0]].status.clickable = true;
+      deck[pairs[0]].status.display = "hidden";
+      deck[pairs[1]].status.clickable = true;
+      deck[pairs[1]].status.display = "hidden";
+      const clickedCard = deck[index]
+      clickedCard.status.clickable = false;
+      clickedCard.status.display = "shown";
+      deck[index] = clickedCard;
+      pairs = [index];
+      this.setState({deck: deck, pairs: pairs});
+    }
+
+    else {
+      const deck = this.state.deck
+      const clickedCard = deck[index]
+      clickedCard.status.clickable = false;
+      clickedCard.status.display = "shown";
+      deck[index] = clickedCard;
+      this.setState({deck: deck});
+    }
+
 
     // this.checkForMatchingPair();
     // this.endTurn();
