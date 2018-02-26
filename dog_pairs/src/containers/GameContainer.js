@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import CardGrid from '../components/CardGrid';
 import Request from '../services/Request';
+import Deck from '../models/Deck'
+import Card from '../models/Card'
 
 class GameContainer extends Component {
 
@@ -8,27 +10,32 @@ class GameContainer extends Component {
     super();
 
     this.state = {
-      dogsImages: [],
+      deck: [],
       pairs: [],
       endOfTurn: false,
       gameWon: false
     }
 
     this.handleCardClick = this.handleCardClick.bind(this);
+    this.buildDeck = this.buildDeck.bind(this);
   }
 
-  onRequestComplete(data) {
-    const firstData = data.message.slice(0, 10);
-    const duplicatedData = [...firstData, ...firstData];
-    const shuffledData = duplicatedData.sort(() => Math.random() - 0.5)
-    this.setState({dogsImages: shuffledData});
-  }
+  // this.setState({dogsImages: shuffledData});
 
   componentDidMount() {
-    const request = new Request('https://dog.ceo/api/breed/retriever/images');
-    request.get()
-      .then(this.onRequestComplete.bind(this))
-      .catch(console.error)
+    const deck = new Deck('https://dog.ceo/api/breed/retriever/images');
+    deck.makeRequest(this.buildDeck)
+  }
+
+  buildDeck(data) {
+      const initialData = data.message.slice(0, 10);
+      const duplicatedData = [...initialData, ...initialData];
+      const cardsArray = duplicatedData.map( (imageUrl) => {
+        return new Card(imageUrl, "hidden", true)
+      })
+
+      const shuffledCards = cardsArray.sort(() => Math.random() - 0.5);
+      this.setState({deck: shuffledCards});
   }
 
   handleMatchedPair(images, pairs) {
@@ -80,7 +87,7 @@ class GameContainer extends Component {
     return (
       <div>
         {message}
-        <CardGrid images={this.state.dogsImages} handleCardClick={this.handleCardClick} endOfTurn={this.state.endOfTurn}/>
+        {/* <CardGrid images={this.state.dogsImages} handleCardClick={this.handleCardClick} endOfTurn={this.state.endOfTurn}/> */}
       </div>
     );
   }

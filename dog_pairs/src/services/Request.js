@@ -14,6 +14,7 @@ class Request {
         }
         const jsonString = this.responseText;
         const data = JSON.parse(jsonString);
+
         resolve(data)
       })
 
