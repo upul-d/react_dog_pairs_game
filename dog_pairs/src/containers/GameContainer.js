@@ -12,7 +12,6 @@ class GameContainer extends Component {
     this.state = {
       deck: [],
       pairs: [],
-      endOfTurn: false,
       gameWon: false
     }
 
@@ -67,15 +66,18 @@ class GameContainer extends Component {
   }
 
   handleCardClick(index) {
-    if (this.state.pairs.length === 0) {
-        this.setState({endOfTurn: false})
-    }
+
     const pairs = this.state.pairs;
     pairs.push(index);
     this.setState({pairs: pairs});
 
-    this.checkForMatchingPair();
-    this.endTurn();
+    // update the clicked cards status
+    const clickedCard = this.state.deck[index]
+    clickedCard.status.clickable = false;
+    clickedCard.status.display = "shown";
+
+    // this.checkForMatchingPair();
+    // this.endTurn();
   }
 
   render() {

@@ -4,15 +4,10 @@ class Card extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      active: false
-    }
-
     this.onCardClick = this.onCardClick.bind(this);
   }
 
   onCardClick() {
-    this.setState({ active: true});
     this.props.handleCardClick(this.props.position);
   }
 
@@ -26,15 +21,19 @@ class Card extends Component {
 
   render() {
 
-    if (this.props.url === "x") {
-      return <div className="card"></div>
+    if (this.props.status.display === "hidden" && this.props.status.clickable) {
+      return <div className={`card ${this.props.status.display}`} onClick={ this.onCardClick }></div>
     }
-    else if (!this.state.active) {
-      return <div className="card hidden" onClick={ this.onCardClick }></div>
+    else if (this.props.status.display === "shown" && !this.props.status.clickable) {
+      return <div className={`card ${this.props.status.display}`} ><img src={this.props.url}/></div>
+    }
+    else if (this.props.status.display === "hidden" && !this.props.status.clickable) {
+      return <div className={`card ${this.props.status.display}`} ></div>
     }
     else {
-      return <div className="card"><img src={this.props.url} /></div>
+      return <div className="card"></div>
     }
+
   }
 
 }
